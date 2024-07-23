@@ -1,0 +1,45 @@
+Cache size                    : 8
+Block size                    : 128
+Associativity                 : 1
+Read only ports               : 0
+Write only ports              : 0
+Read write ports              : 1
+Single ended read ports       : 0
+Cache banks (UCA)             : 8
+Technology                    : 0.05
+Temperature                   : 350
+Tag size                      : 42
+array type                    : Scratch RAM
+Model as memory               : 1
+Model as 3D memory       	 : 1
+Access mode                   : 2
+Data array cell type          : 4
+Data array peripheral type    : 1
+Tag array cell type           : 0
+Tag array peripheral type     : 0
+Optimization target           : 0
+Design objective (UCA wt)     : 0 0 0 0 100
+Design objective (UCA dev)    : 50 100000 100000 100000 1000000
+Cache model                   : 0
+Nuca bank                     : 0
+Wire inside mat               : 1
+Wire outside mat              : 2
+Interconnect projection       : 1
+Wire signaling               : 1
+Print level                   : 1
+ECC overhead                  : 1
+Page size                     : 8192
+Burst length                  : 4
+Internal prefetch width       : 1
+Force cache config            : 1
+Ndwl                          : 16
+Ndbl                          : 32
+Nspd                          : 1
+Ndcm                          : 1
+Ndsam1                        : 1
+Ndsam2                        : 1
+Subarray Driver direction       : 1
+iostate                       : READ
+dram_ecc                      : NO_ECC
+io_type                     : DDR3
+dram_dimm                      : UDIMM
