@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
 import subprocess
 import shutil
+import sys
 
 # inputs
-parameter = "capacity"
+parameter = "dram_type"
 mid = " "
-values = list(range(20, 180, 20))
+values = ['DDR3', 'DDR4', 'LPDDR2', 'WideIO', 'Serial']
+type = 'cache'
 
 formatted_parameter = parameter.replace(' ', '_')
 
@@ -19,15 +21,18 @@ for v in values:
     f.close()
 
     # run config file
-    command = f"./runfile.sh {config}"
+    command = f"scripts/runfile.sh {config}"
     try: 
-        subprocess.run(command, shell=True, executable="/bin/bash")
+        p = subprocess.run(command, shell=True, executable="/bin/bash")
+        # p.wait()
         print(f"ran {command}")
     except:
         print(f"failed {command}")
+        sys.exit(1)
 
 # sort output to a directory, generate csv file, produce graph of output
-subprocess.run(f"./sort.sh {formatted_parameter}", shell=True, executable="/bin/bash")
-subprocess.call(f"./gen_csv.py {formatted_parameter}", shell=True)
+subprocess.run(f"scripts/sort.sh {formatted_parameter}", shell=True, executable="/bin/bash")
+subprocess.call(f"scripts/gen_csv.py {type} {formatted_parameter}", shell=True)
+subprocess.call(f"scripts/graph.py {type} {formatted_parameter}.csv", shell=True)
 
 print("done")
