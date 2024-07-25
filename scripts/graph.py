@@ -35,8 +35,6 @@ def neat(df, type):
                 continue
         if col == 'DRAM core area (mm2)' or col == 'DRAM area per die (mm2)' or col == 'TSV area overhead (mm2)':
             to_return[col] = to_return[col].replace("mm2", "", regex=True)
-        if col == 'Leakage Power I/O (mW) (e-05)':
-            to_return[col] = to_return[col].replace("e-05", "", regex=True)
         else:
             to_return[col] = to_return[col].replace("[a-z_A-Z%]", "", regex=True)
             to_return[col].astype(float)
@@ -55,24 +53,31 @@ cols = df.columns
 
 # plot on a r x c grid
 if type == 'cache': # 14 columns
-    r = 3
-    c = 5
-    max = 14
+    tot_r = 3
+    tot_c = 5
+    # max = 14
 elif type == '3D': # 18 columns
-    r = 3
-    c = 6
-    max = 18
+    tot_r = 3
+    tot_c = 6
+    # max = 18
+elif type == 'simple_cache': # 4 data columns
+    tot_r = 2
+    tot_c = 2
 
-fig, axs = plt.subplots(r, c, figsize=(14, 7))
+fig, axs = plt.subplots(tot_r, tot_c, figsize=(14, 7))
 fig.suptitle(csv.replace('_', ' ').replace('.csv', ''))
 
+#FIXME: adjust to stop after columns end
 c_i = 1
-for r in range(0, r):
-    for c in range (0, c):
+for r in range(0, tot_r):
+    for c in range(0, tot_c):
         try:
+            print(df['Name'])
+            print(df[cols[c_i]])
             axs[r][c].scatter('Name', cols[c_i], data=df)
-            axs[r][c].set_yticks([])
-            axs[r][c].set_title(re.sub(r"\(.*\)", "", cols[c_i]))
+            axs[r][c].set_title(cols[c_i])
+            # axs[r][c].set_yticks([]) - erase y ticks
+            # axs[r][c].set_title(re.sub(r"\(.*\)", "", cols[c_i])) - filter units out of title
         except:
             print('incomplete grid')
         c_i += 1

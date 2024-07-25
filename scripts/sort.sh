@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
-mkdir cacti_sweeps/"$1" && cd cacti_sweeps/"$1" || exit
-mkdir configs && mv ~/pim/*.cfg configs
-mkdir results && mv ~/pim/*.txt results
-mkdir output && mv ~/pim/*.out output
+direc="$1"
+mkdir "cacti_sweeps/$direc" || direc+=1 && mkdir "cacti_sweeps/$direc"
+echo "new directory: cacti_sweeps/$direc"
+cd "cacti_sweeps" || exit
+mkdir "$direc"/configs && mkdir "$direc"/results && mkdir "$direc"/output
+mv ../*.cfg "$direc"/configs
+mv ../*.txt "$direc"/results
+mv ../*.out "$direc"/output 
 echo 'sorted'
