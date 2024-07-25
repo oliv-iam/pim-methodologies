@@ -8,16 +8,10 @@ if len(sys.argv) != 3:
     print('provide type and parameter as arguments')
     sys.exit(1)
 
-# take type and parameter as arguments
+# take type and parameter as arguments, create csv file to write to
 type = sys.argv[1] # '3D', 'mixed_cache', 'spec_cache'
 directory = f"cacti_sweeps/{sys.argv[2]}/results"
-
-# create and open csv file from template for type '3D', 'mixed_cache'
 new_csv = f"{sys.argv[2]}.csv"
-if type in ['3D', 'mixed_cache']:
-    csv = shutil.copy(f"cacti_sweeps/{type}_headings.csv", new_csv)
-    global f
-    f = open(new_csv, 'a')
 
 # iterate through files in given directory
 for filename in os.listdir(directory):
@@ -40,9 +34,13 @@ for filename in os.listdir(directory):
             print('specific model not defined')
             sys.exit(1)
 
-    # load csv if 'spec_cache'
-    if type == 'spec_cache':
-        csv = shutil.copy(f"cacti_sweeps/{spec}_headings.csv", new_csv)
+    # load csv file depending on type/spec
+    if filename == os.listdir(directory)[0]:
+        if type == 'spec_cache':
+            csv = shutil.copy(f"cacti_sweeps/csv_headings/{spec}_headings.csv", new_csv)
+            f = open(new_csv, 'a')
+        else:
+            csv = shutil.copy(f"cacti_sweeps/csv_headings/{type}_headings.csv", new_csv)
         f = open(new_csv, 'a')
 
     # write name, IO results to csv regardless of type
