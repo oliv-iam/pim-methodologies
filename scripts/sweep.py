@@ -4,7 +4,7 @@ import sys
 import os
 
 """
-Generate config files for a range of parameter values. Call runfile.sh, gen_csv.py, graph.py subprocesses.
+Wrapper for gen_config.py, runfile.sh, gen_csv.py, graph.py subprocesses.
 """
 
 parameter = 'bus_freq' # "dram type"
@@ -19,7 +19,7 @@ for v in values:
     # generate config file
     config = f"{formatted_parameter}_{v}.cfg"
     to_write = f"-{parameter}{mid}{v}"
-    subprocess.call(f"scripts/gen_cfg.py '{config}' '{to_write}'", shell=True)
+    subprocess.call(f"scripts/gen_cfg.py '{config}' '{to_write}'", shell=True) # takes config filename and line to write
 
     if config in os.listdir():
         # adjust to .call if not waiting properly

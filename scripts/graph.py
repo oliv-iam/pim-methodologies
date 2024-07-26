@@ -33,7 +33,7 @@ df = format(pd.read_csv(csv), type)
 cols = df.columns
 
 slant = False
-if isinstance(df['Name'][1], object) and len(df.index) > 3:
+if len(df.index) > 3: # FIXME: adjust this condition?
     slant = True
 if type == 'spec_cache': # 20 / 14 values to plot (comm-dram/sram)
     tot_r = 4
