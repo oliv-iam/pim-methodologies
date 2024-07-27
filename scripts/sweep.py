@@ -7,9 +7,9 @@ import os
 Wrapper for gen_config.py, runfile.sh, gen_csv.py, graph.py subprocesses.
 """
 
-parameter = 'bus_freq' # "dram type"
+parameter = 'capacity' # "dram type"
 # 0-1.5 GHz
-values = ['0.1 GHz', '0.3 GHz', '0.5 GHz', '0.7 GHz', '0.9 GHz', '1.1 GHz', '1.3 GHz', '1.5 GHz'] # ['DDR3', 'DDR4']
+values = [] # ['DDR3', 'DDR4']
 mid = ' ' # " (Gb) "
 type = 'spec_cache' # '3D', 'mixed_cache', 'spec_cache'
 
@@ -28,8 +28,8 @@ for v in values:
         print('config file not found')
 
 # sort output to a directory, generate csv file, produce graph of output
-subprocess.call(f"scripts/sort.sh {formatted_parameter}", shell=True, executable="/bin/bash") # takes in directory name
-subprocess.call(f"scripts/gen_csv.py {type} {formatted_parameter}", shell=True) # takes type and parameter
-subprocess.call(f"scripts/graph.py {type} {formatted_parameter}.csv", shell=True)
+# subprocess.call(f"scripts/sort.sh {formatted_parameter}", shell=True, executable="/bin/bash") # takes in directory name
+# subprocess.call(f"scripts/gen_csv.py {type} {formatted_parameter}", shell=True) # takes type and parameter
+# subprocess.call(f"scripts/graph.py {type} {formatted_parameter}.csv", shell=True)
 
 print("done")

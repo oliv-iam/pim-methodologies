@@ -4,6 +4,8 @@ import os
 import sys
 import re
 
+#FIXME: modify script to work even if input params not printed
+
 if len(sys.argv) != 3:
     print('provide type and parameter as arguments')
     sys.exit(1)
@@ -24,7 +26,7 @@ for filename in os.listdir(directory):
     spec = ''
     if type in ['mixed_cache', 'spec_cache']:
         model = lines[45][lines[45].index('2), ')+4:lines[45].index('-', 12)-1]
-        if model == 'UniformCache Access Commodity DRAM Model':
+        if model == 'Uniform Cache Access Commodity DRAM Model':
             spec = 'uca_comm-dram'
         elif model == 'Uniform Cache Access SRAM Model':
             spec = 'uca_sram'
