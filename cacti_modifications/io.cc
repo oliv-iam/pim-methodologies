@@ -1,5 +1,6 @@
-// MODIFIED lines 1039 (uncomment if statement), 1233, 2256, 2263, 2819 (typos) (old lines)
 // MODIFIED METHOD parse_cfg: added statements for tflight_value, ron_value, rtt_value
+// MODIFIED METHOD cacti_interface: uncommented if statement for printing inputs; added if statements for csv output, memcad optimization
+// MODIFIED various lines for typos, inconsistencies
 
 /*****************************************************************************
  *                                CACTI 7.0
@@ -195,8 +196,8 @@ InputParameter::parse_cfg(const string & in_file)
     	  //is_main_mem = false;
       }
 
-	  if (g_ip->print_detail_debug)
-	  {cout << "io.cc: is_3d_mem = " << is_3d_mem << endl;}
+      if (g_ip->print_detail_debug)
+      {cout << "io.cc: is_3d_mem = " << is_3d_mem << endl;}
 
       if (!strncmp("cam", temp_var, sizeof("cam"))) {
         pure_cam = true;
@@ -1349,14 +1350,20 @@ uca_org_t cacti_interface(const string & infile_name)
   solve(&fin_res);
 
   output_UCA(&fin_res);
-  output_data_csv(fin_res, infile_name + ".out");
-  //if(g_ip->is_3d_mem) {
-  //  output_data_csv_3dd(fin_res);
-  //} <- my mod
+  
+  if(g_ip->is_3d_mem) {
+   output_data_csv_3dd(fin_res, infile_name + ".out");
+  } else {
+    output_data_csv(fin_res, infile_name + ".out");
+  } // added if statements
 
   // Memcad Optimization
+
+  if(g_ip->io_type==DDR3 || g_ip->io_type==DDR4) {
   MemCadParameters memcad_params(g_ip);
   solve_memcad(&memcad_params);
+  } // added if statement
+
 
 
   delete (g_ip);
@@ -2211,14 +2218,14 @@ bool InputParameter::error_checking()
   return true;
 }
 
-void output_data_csv_3dd(const uca_org_t & fin_res)
+void output_data_csv_3dd(const uca_org_t & fin_res, string fn) // adjusted inputs and file naming
 {
   //TODO: the csv output should remain
-  fstream file("out.csv", ios::in);
+  fstream file(fn.c_str(), ios::in); 
   bool    print_index = file.fail();
   file.close();
 
-  file.open("out.csv", ios::out|ios::app);
+  file.open(fn.c_str(), ios::out|ios::app);
   if (file.fail() == true)
   {
     cerr << "File out.csv could not be opened successfully" << endl;
@@ -2750,10 +2757,10 @@ void output_UCA(uca_org_t *fr)
 	if(g_ip->is_3d_mem)
 	{
 
-		cout<<"-------  CACTI (version "<< VER_MAJOR_CACTI <<"."<< VER_MINOR_CACTI<<"."<< VER_COMMENT_CACTI
-								<< " of " << VER_UPDATE_CACTI << ") 3D DRAM Main Memory  -------"<<endl;
+		cout<<"\n-------  CACTI (version "<< VER_MAJOR_CACTI <<"."<< VER_MINOR_CACTI<<"."<< VER_COMMENT_CACTI
+								<< " of " << VER_UPDATE_CACTI << ") 3D DRAM Main Memory  -------\n"<<endl;
 
-		cout << "\nMemory Parameters:\n";
+		cout << "Memory Parameters:\n";
 		cout << "	Total memory size (Gb): " <<
 				(int) (g_ip->cache_sz) << endl;
 		if(g_ip->num_die_3d>1)

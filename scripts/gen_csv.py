@@ -57,8 +57,8 @@ for filename in os.listdir(directory):
 
     # parse values specific to 3D DRAM
     if type == '3D':
-        for i in range(62, 83):
-            if i in [68, 73, 79]:
+        for i in range(61, 82): # previous numbers : (62, 83)
+            if i in [67, 72, 78]: # previously : [68, 73, 79]
                 continue
             else:
                 f.write(f", {re.sub(r"[a-zA-Z %]", '', lines[i][lines[i].index(':')+2:])}")
