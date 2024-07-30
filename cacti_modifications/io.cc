@@ -1019,7 +1019,7 @@ InputParameter::parse_cfg(const string & in_file)
     sscanf(line, "-ron_value %lf", &ron_value);
   }
   if(!strncmp("-tflight_value", line, strlen("-tflight_value"))) {
-    sscanf(line, "-num_bobs %d", &num_bobs);
+    sscanf(line, "-tflight_value %lf", &tflight_value);
   }
 
     if(!strncmp("-total_power", line, strlen("-total_power"))) {
@@ -1303,7 +1303,7 @@ uca_org_t cacti_interface(const string & infile_name)
 	
 	
    
-  IOTechParam iot(g_ip, g_ip->io_type, g_ip->num_mem_dq, g_ip->mem_data_width, g_ip->num_dq,g_ip->dram_dimm, 1,g_ip->bus_freq ); 
+  IOTechParam iot(g_ip, g_ip->io_type, g_ip->num_mem_dq, g_ip->mem_data_width, g_ip->num_dq, g_ip->dram_dimm, 1 ,g_ip->bus_freq ); 
   Extio testextio(&iot);  
   testextio.extio_area();
   testextio.extio_eye();

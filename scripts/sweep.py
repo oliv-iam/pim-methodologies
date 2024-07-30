@@ -7,8 +7,8 @@ import os
 Wrapper for gen_config.py, runfile.sh, gen_csv.py, graph.py subprocesses.
 """
 
-parameter = 'dram type' # "dram type"
-values = ['"DDR3"', '"DDR4"', '"LPDDR2"', '"WideIO"', '"Low_Swing_Diff"', '"Serial"'] # ['DDR3', 'DDR4']
+parameter = 'dram dimm' # "dram type"
+values = ['"UDIMM"', '"RDIMM"', '"LRDIMM"'] # ['DDR3', 'DDR4']
 mid = ' ' # " (Gb) "
 type = 'spec_cache' # '3D', 'mixed_cache', 'spec_cache'
 
